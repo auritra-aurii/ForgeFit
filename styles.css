@@ -51,3 +51,10 @@ body.resting main{padding-bottom:calc(150px + env(safe-area-inset-bottom))}
 #sum .box{text-align:left;max-height:88vh;overflow:auto;width:100%;max-width:380px}#sum .box h2:first-child{margin-top:0;font-size:18px}
 .mb{display:grid;grid-template-columns:90px 1fr 24px;gap:8px;align-items:center;margin:6px 0;font-size:13px}.mb b{text-align:right}
 .mbt{height:10px;background:var(--b);border-radius:9px;overflow:hidden}.mbt i{display:block;height:100%;background:linear-gradient(90deg,var(--g),var(--u))}
+/* v5: sheet, muscle map, analytics */
+#sheet{position:fixed;inset:0;background:rgba(0,0,0,.88);display:flex;align-items:flex-end;justify-content:center;z-index:9}#sheet[hidden]{display:none}
+#sheet .box{width:100%;max-width:640px;max-height:88vh;overflow:auto;text-align:left;border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
+#sheet .box h2:first-child{margin-top:0;font-size:18px}#sheet .box>button{width:100%;margin-top:10px}.sb{text-align:left}.sb+.sb{margin-top:6px}.box>.sb{margin-top:6px}
+.lnk{color:var(--u);text-decoration:underline dotted}.gbtn{width:100%;margin:8px 0 2px}
+.mm{display:block;width:100%;max-width:300px;margin:6px auto}.mu{fill:#27272a;stroke:#3f3f46;stroke-width:.6}.mu.pm{fill:var(--g);stroke:var(--g)}.mu.sm{fill:var(--u);fill-opacity:.75;stroke:var(--u)}.lb{fill:#71717a;font-size:7px;text-anchor:middle}
+.mb{grid-template-columns:90px 1fr 48px}nav button{font-size:9px}
