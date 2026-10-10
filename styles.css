@@ -58,3 +58,9 @@ body.resting main{padding-bottom:calc(150px + env(safe-area-inset-bottom))}
 .lnk{color:var(--u);text-decoration:underline dotted}.gbtn{width:100%;margin:8px 0 2px}
 .mm{display:block;width:100%;max-width:300px;margin:6px auto}.mu{fill:#27272a;stroke:#3f3f46;stroke-width:.6}.mu.pm{fill:var(--g);stroke:var(--g)}.mu.sm{fill:var(--u);fill-opacity:.75;stroke:var(--u)}.lb{fill:#71717a;font-size:7px;text-anchor:middle}
 .mb{grid-template-columns:90px 1fr 48px}nav button{font-size:9px}
+/* v6: execution modal + cardio */
+.tabs button{font-size:11px;padding:8px 0}.exh{cursor:pointer}
+.adj{width:100%;max-width:340px;display:block;margin:8px auto;color:var(--u)}.cl{fill:#f59e0b;stroke:#000;stroke-width:.8}.cn{fill:#000;font-size:5.5px;font-weight:700;text-anchor:middle}
+.lg{padding-left:22px;font-size:13px}.lg li{margin:4px 0}
+.ckl{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--b);font-size:13px}.ckl input{width:22px;height:22px;accent-color:var(--g);flex:none}
+.gp ol{padding-left:20px;font-size:14px}
