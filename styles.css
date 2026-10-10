@@ -84,3 +84,16 @@ body.resting main{padding-bottom:calc(150px + env(safe-area-inset-bottom))}
 .pl{fill:rgba(250,204,21,.45);stroke:#facc15;stroke-width:.8;transform-box:fill-box;transform-origin:center;animation:pl 1.4s ease-out infinite}
 @keyframes pl{0%{transform:scale(1);opacity:.95}100%{transform:scale(2.8);opacity:0}}
 @media(prefers-reduced-motion:reduce){.rk,.tk,.sk,.wk,.bl,.pl,.ind span{animation-play-state:paused}}
+/* v8: real-human demo frames */
+.mw{position:relative;padding:0;overflow:hidden;background:#111}
+.frames{position:relative;aspect-ratio:3/2;background:#111}
+.frames img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}
+.f1{opacity:0;animation:f1 4s ease-in-out infinite}
+@keyframes f1{0%{opacity:0}25%,32%{opacity:1}100%{opacity:0}}
+.skel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--m);font-size:13px;z-index:1;background:linear-gradient(100deg,#111 30%,#1f1f23 50%,#111 70%) 0 0/200% 100%;animation:shim 1.2s linear infinite}
+@keyframes shim{to{background-position:-200% 0}}
+.mw.ready .skel{display:none}
+.mw .ind{position:absolute;top:8px;left:10px;right:10px;z-index:3}
+.mw:not(.ready) .ind{visibility:hidden}.mw:not(.ready) .f1,.mw:not(.ready) .ind span{animation-play-state:paused}
+.mc{font-size:11px;margin:-2px 0 8px}
+@media(prefers-reduced-motion:reduce){.f1{animation-play-state:paused}}
