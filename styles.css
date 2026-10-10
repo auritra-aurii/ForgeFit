@@ -64,3 +64,23 @@ body.resting main{padding-bottom:calc(150px + env(safe-area-inset-bottom))}
 .lg{padding-left:22px;font-size:13px}.lg li{margin:4px 0}
 .ckl{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--b);font-size:13px}.ckl input{width:22px;height:22px;accent-color:var(--g);flex:none}
 .gp ol{padding-left:20px;font-size:14px}
+/* v7: animated demos, breathing indicator, pulsing adjust dots */
+.dm{background:#000;border:1px solid var(--b);border-radius:14px;padding:8px;margin:8px 0}
+.demo{width:100%;max-width:300px;display:block;margin:0 auto 8px;color:var(--t)}
+.rk,.tk,.sk{animation-duration:4s;animation-iteration-count:infinite;animation-timing-function:ease-in-out}
+.rk{animation-name:rk}.tk{animation-name:tk}.sk{animation-name:sk}
+.wk{animation:wk 2s ease-in-out infinite}.bl{stroke-dasharray:6 6;animation:belt 1s linear infinite;stroke:var(--u)}
+@keyframes rk{0%,100%{transform:rotate(var(--a0,0deg))}25%{transform:rotate(var(--a1,0deg))}}
+@keyframes tk{0%,100%{transform:translate(var(--x0,0px),var(--y0,0px))}25%{transform:translate(var(--x1,0px),var(--y1,0px))}}
+@keyframes sk{0%,100%{transform:scale(var(--sx0,1),var(--sy0,1))}25%{transform:scale(var(--sx1,1),var(--sy1,1))}}
+@keyframes wk{0%,100%{transform:rotate(var(--a0,0deg))}50%{transform:rotate(var(--a1,0deg))}}
+@keyframes belt{to{stroke-dashoffset:-12}}
+.ind{position:relative;height:36px}
+.ind span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:99px;font-weight:800;font-size:13px;letter-spacing:.06em;color:#000;animation-duration:4s;animation-iteration-count:infinite;animation-timing-function:linear}
+.ex{background:var(--u);animation-name:exh}.inh{background:var(--g);animation-name:inh;opacity:0}
+@keyframes exh{0%{opacity:1;box-shadow:0 0 4px var(--u)}12%{box-shadow:0 0 30px var(--u)}24%{opacity:1;box-shadow:0 0 4px var(--u)}25%,100%{opacity:0}}
+@keyframes inh{0%,24%{opacity:0}25%{opacity:1;box-shadow:0 0 4px var(--g)}60%{box-shadow:0 0 30px var(--g)}100%{opacity:1;box-shadow:0 0 4px var(--g)}}
+.cl{fill:#facc15;stroke:#000}
+.pl{fill:rgba(250,204,21,.45);stroke:#facc15;stroke-width:.8;transform-box:fill-box;transform-origin:center;animation:pl 1.4s ease-out infinite}
+@keyframes pl{0%{transform:scale(1);opacity:.95}100%{transform:scale(2.8);opacity:0}}
+@media(prefers-reduced-motion:reduce){.rk,.tk,.sk,.wk,.bl,.pl,.ind span{animation-play-state:paused}}

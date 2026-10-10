@@ -92,7 +92,7 @@ const BR={push:'Exhale dynamically as you press up (1–2s). Inhale slowly over 
 const JNT={push:'Elbows 45–75° from torso, never flared to 90°. Do not slam elbows into lockout.',pull:'Keep elbows close to body, shoulders down. No shrugging or jerking.',legs:'Knees track over toes, never cave inward. Stop at depth where back stays neutral.',core:'Neck neutral, lower back never arching off floor.',cardio:'Soft knees and ankles. Do not death-grip rails.'};
 const EGO='If you swing, bounce, arch or shorten the range to finish a rep, drop the load 10–20%. Ego lifting after a long break is the fastest way to get hurt.';
 const eqk=e=>{const q=e[4];return q.includes('bench')?'bench':q.includes('barbell')?'rack':q=='bw'?'':q.split('+')[0]};
-const adjSvg=k=>{const a=ADJ[k];if(!a)return'<p class=m>No machine. Clear floor space and a mat if needed.</p>';return`<svg class=adj viewBox="0 0 96 72" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${IC[k]}${a.map((c,i)=>`<circle class=cl cx="${c[0]}" cy="${c[1]}" r="4.5"/><text class=cn x="${c[0]}" y="${c[1]+2}">${i+1}</text>`).join('')}</svg><ol class=lg>${a.map(c=>`<li>${c[2]}</li>`).join('')}</ol>`};
+const adjSvg=k=>{const a=ADJ[k];if(!a)return'<p class=m>No machine. Clear floor space and a mat if needed.</p>';return`<svg class=adj viewBox="0 0 96 72" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${IC[k]}${a.map((c,i)=>`<circle class=pl style="animation-delay:${i*.3}s" cx="${c[0]}" cy="${c[1]}" r="4.5"/><circle class=cl cx="${c[0]}" cy="${c[1]}" r="4.5"/><text class=cn x="${c[0]}" y="${c[1]+2}">${i+1}</text>`).join('')}</svg><ol class=lg>${a.map(c=>`<li>${c[2]}</li>`).join('')}</ol>`};
 const guide=e=>{const q=G[e[0]]||['','','',''],p=POST[e[0]]||['','','',''],T=['Adjust','Posture','Move','Breath','Safety','Muscles'];
 return`<div class=guide><div class=tabs>${T.map((t,i)=>`<button class="ghost ${i?'':'on'}" data-a=gt data-s=${i}>${t}</button>`).join('')}</div>
 <div class="gp on" data-s=0><p>${q[0]}</p>${adjSvg(eqk(e))}</div>
@@ -101,7 +101,33 @@ return`<div class=guide><div class=tabs>${T.map((t,i)=>`<button class="ghost ${i
 <div class=gp data-s=3><p><b>Cadence:</b> ${BR[e[2]]}</p><p><b>This lift:</b> ${q[1]}</p></div>
 <div class=gp data-s=4><p>⚠ ${e[7]}</p><p><b>Joint angles:</b> ${JNT[e[2]]}</p><p>${SAFE[e[2]]}</p><p><b>Ego check:</b> ${EGO}</p></div>
 <div class=gp data-s=5>${mmap(e)}<p><b>Primary:</b> ${q[2]}</p><p><b>Secondary:</b> ${q[3]}</p></div></div>`};
-function sheetOpen(id){const e=EX.find(x=>x[0]==id),s=$('#sheet');s.hidden=false;s.innerHTML=`<div class=box><h2>${e[1]}</h2><div class=m>${e[3]}</div>${guide(e)}<button data-a=cs2>Close</button></div>`}
+// animated demos: 4s loop = 1s effort (exhale) + 3s controlled return (inhale)
+const dO=(x,y)=>`transform-origin:${x}px ${y}px`;
+const dR=(x,y,a,b,i,c='rk')=>`<g class="${c}" style="${dO(x,y)};--a0:${a}deg;--a1:${b}deg">${i}</g>`;
+const dT=(a,b,c,d,i)=>`<g class=tk style="--x0:${a}px;--y0:${b}px;--x1:${c}px;--y1:${d}px">${i}</g>`;
+const dS=(x,y,a,b,c,d,i)=>`<g class=sk style="${dO(x,y)};--sx0:${a};--sy0:${b};--sx1:${c};--sy1:${d}">${i}</g>`;
+const dL=(a,b,c,d,k='')=>`<line class="${k}" x1="${a}" y1="${b}" x2="${c}" y2="${d}"/>`;
+const dH=(x,y)=>`<circle cx="${x}" cy="${y}" r="6"/>`;
+const dB=(x,y,r=4)=>`<circle class=a cx="${x}" cy="${y}" r="${r}"/>`;
+const DM={
+bench:()=>`<path d="M14 58h84M24 58v28M88 58v28"/>${dH(24,48)}${dL(32,52,76,52)}${dL(76,52,92,60)}${dL(92,60,92,86)}${dS(40,52,1,.2,1,1,dL(40,52,40,20))}${dT(0,26,0,0,dL(26,20,54,20,'a'))}`,
+pushup:()=>`${dS(34,84,1,.47,1,1,dL(34,84,34,60))}${dR(100,84,-11,0,dL(100,84,34,60)+dH(26,57))}`,
+ohp:()=>`${dH(60,16)}${dL(60,24,60,54)}${dL(60,54,54,86)}${dL(60,54,66,86)}${dS(60,30,1,.29,1,1,dL(60,30,60,2))}${dT(0,20,0,0,dL(44,2,76,2,'a'))}`,
+fly:()=>`${dH(60,16)}${dL(60,24,60,62)}${dL(46,68,74,68)}${dL(60,62,60,86)}${dS(50,34,1,1,.2,1,dL(50,34,18,34,'a'))}${dS(70,34,1,1,.2,1,dL(70,34,102,34,'a'))}`,
+lat:()=>`${dH(60,14)}${dL(60,22,60,56)}${dL(52,28,68,28)}${dL(60,56,54,86)}${dL(60,56,66,86)}${dR(52,28,0,80,dL(52,28,52,52)+dB(52,55,3.5))}${dR(68,28,0,-80,dL(68,28,68,52)+dB(68,55,3.5))}`,
+pd:()=>`${dH(50,16)}${dL(50,24,50,56)}${dL(50,56,45,86)}${dL(50,56,56,86)}${dL(50,30,52,54)}${dR(52,54,-90,0,dL(52,54,52,76)+dB(52,79,3.5))}<circle cx="70" cy="6" r="3"/>`,
+pull:()=>`${dH(56,28)}${dL(56,36,56,66)}${dL(44,70,78,70)}${dL(56,66,80,66)}${dL(80,66,80,86)}${dS(56,4,1,.19,1,1,dL(56,4,56,36))}${dS(56,40,1,1,1,.13,dL(56,40,56,10))}${dT(0,0,0,26,dL(42,10,70,10,'a'))}`,
+row:()=>`${dH(50,28)}${dL(50,36,50,66)}${dL(40,70,76,70)}${dL(50,66,80,66)}${dL(80,66,86,84)}${dS(50,42,1,1,.15,1,dL(50,42,76,42))}${dT(0,0,-22,0,dL(76,34,76,50,'a'))}${dS(112,48,1,1,1.6,1,dL(112,48,76,42,'a'))}`,
+curl:()=>`${dH(56,16)}${dL(56,24,56,56)}${dL(56,56,50,86)}${dL(56,56,62,86)}${dL(56,30,58,54)}${dR(58,54,0,-130,dL(58,54,58,76)+dB(58,79))}`,
+lp:()=>`<path d="M16 76L102 26"/>${dL(28,62,16,40)}${dH(12,33)}${dR(28,62,-35,0,dL(28,62,49,50)+dR(49,50,85,0,dL(49,50,70,38)))}${dT(-9.3,10.4,0,0,dL(66,31,74,45,'a')+'<rect class=p x="74" y="33" width="8" height="16"/>')}`,
+squat:()=>dR(60,86,30,0,dL(60,86,60,64)+dR(60,64,-120,0,dL(60,64,60,40)+dR(60,40,120,0,dL(60,40,60,16)+dL(60,20,74,20,'a')+dH(60,8)))),
+hinge:()=>`${dL(60,46,58,66)}${dL(58,66,58,86)}${dR(60,46,75,0,dL(60,46,60,20)+dH(60,12)+dR(60,20,-75,0,dL(60,20,60,46,'a')+dB(60,49)))}`,
+calf:()=>dT(0,0,0,-7,`${dH(60,14)}${dL(60,22,60,50)}${dL(60,50,60,82)}${dL(60,82,68,86)}`),
+plank:()=>`${dH(16,58)}${dL(28,64,28,86)}${dL(100,70,104,86)}${dT(0,0,0,-2,dL(24,62,100,70))}`,
+walk:()=>`<path class=bl d="M12 88h96"/>${dH(60,12)}${dL(60,20,60,46)}${dR(60,46,-28,28,dL(60,46,60,82),'wk')}${dR(60,46,28,-28,dL(60,46,60,82),'wk')}${dR(60,26,28,-28,dL(60,26,60,46,'a'),'wk')}${dR(60,26,-28,28,dL(60,26,60,46,'a'),'wk')}`};
+const PAT={dbbench:'bench',bbbench:'bench',pushup:'pushup',dbpress:'ohp',pecdeck:'fly',latraise:'lat',pushdown:'pd',latpd:'pull',pullup:'pull',dbrow:'row',bbrow:'row',cablerow:'row',superman:'row',dbcurl:'curl',legpress:'lp',bbsquat:'squat',smithsq:'squat',goblet:'squat',bwsquat:'squat',lunge:'squat',dbrdl:'hinge',calf:'calf',plank:'plank',deadbug:'plank',tread:'walk'};
+const demoBlock=e=>`<div class=dm><svg class=demo viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 88h104" opacity=".35"/>${DM[PAT[e[0]]]()}</svg><div class=ind><span class=ex>EXHALE</span><span class=inh>INHALE (3s controlled)</span></div><div class=m>Loop: 1s effort (exhale) · 3s controlled return (inhale). Green = weight or handle.</div></div>`;
+function sheetOpen(id){const e=EX.find(x=>x[0]==id),s=$('#sheet');s.hidden=false;s.innerHTML=`<div class=box><h2>${e[1]}</h2><div class=m>${e[3]}</div>${demoBlock(e)}${guide(e)}<button data-a=cs2>Close</button></div>`}
 const CE=['Treadmill','Elliptical','Stationary Bike'],CI=['Light','Moderate','Hard'];
 const cardioLoad=()=>(S.cardio||[]).filter(c=>c.date==td()).reduce((a,c)=>a+c.min*({Light:.7,Moderate:1,Hard:1.5}[c.int]||1),0);
 const cardioCard=()=>{const t=(S.cardio||[]).map((c,i)=>[c,i]).filter(x=>x[0].date==td()),cd=S.cd||{};
